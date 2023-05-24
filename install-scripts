@@ -1,0 +1,10 @@
+#!/bin/bash
+NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew install jq git wget telnet
+mkdir -p ~/repos && cd ~/repos || exit
+git clone https://github.com/medisafe/devops-tools.git
+# link repo dir to local system
+ln -s ~/repos/devops-tools/scripts ~/.
+# fix path to include $HOME/scripts dir
+# shellcheck disable=SC2016
+if ! grep -qxF 'export PATH="$HOME/scripts:$PATH"' ~/.zshrc; then sed -i '' '/export PATH/s/:$HOME\/scripts//;/export PATH/s/"$HOME"\/scripts//' ~/.zshrc && echo 'export PATH="$HOME/scripts:$PATH"' >> ~/.zshrc; fi
