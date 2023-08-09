@@ -1,9 +1,14 @@
 #!/bin/bash
 echo "  ***** Now Installing Scripts *****  "
 NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew install jq git wget telnet
+brew install jq git wget telnet gh
+
+echo "  ***** Please follow these steps to log into GitHub *****  "
+gh config set -h github.com git_protocol ssh
+gh auth login
+
 mkdir -p ~/repos && cd ~/repos || exit
-git clone https://github.com/medisafe/devops-tools.git
+gh clone medisafe/devops-tools.git
 # link repo dir to local system
 ln -s ~/repos/devops-tools/scripts ~/.
 # fix path to include $HOME/scripts dir
